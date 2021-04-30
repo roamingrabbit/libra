@@ -1,7 +1,7 @@
 //! Key generation
 use std::env;
 
-use abscissa_core::{status_info, status_warn};
+// use abscissa_core::{status_info, status_warn};
 use libra_wallet::{Mnemonic, WalletLibrary};
 use libra_types::{
   account_address::AccountAddress,
@@ -31,7 +31,7 @@ pub fn keygen() -> (AuthenticationKey, AccountAddress, WalletLibrary) {
         ...........................");
       
 
-        status_info!(&mnemonic_string.as_str(), "\n");
+        println!("{}\n", &mnemonic_string.as_str());
         println!("WRITE THIS DOWN NOW. This is the last time you will see \
                   this mnemonic. It is not saved anywhere. Nobody can help \
                   you if you lose it.\n\n");
@@ -62,7 +62,7 @@ pub fn account_from_prompt()
         
         // if we are in debugging or CI mode
         if val != "prod" && maybe_env_mnem.is_ok() {
-          status_warn!("Debugging mode, using mnemonic from env variable, $MNEM");
+          println!("Debugging mode, using mnemonic from env variable, $MNEM");
           return get_account_from_mnem(maybe_env_mnem.unwrap().trim().to_string())
         }
         println!("Debugging mode, you can set mnemonic to env $MNEM");
