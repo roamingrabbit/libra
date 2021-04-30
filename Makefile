@@ -257,6 +257,7 @@ endif
 set-waypoint:
 	@if test -f ${DATA_PATH}/key_store.json; then \
 		jq -r '. | with_entries(select(.key|match("/waypoint";"i")))[].value' ${DATA_PATH}/key_store.json > ${DATA_PATH}/client_waypoint; \
+		jq -r '. | with_entries(select(.key|match("/genesis-waypoint";"i")))[].value' ${DATA_PATH}/key_store.json > ${DATA_PATH}/genesis_waypoint; \
 	fi
 
 	@if test ! -f ${DATA_PATH}/key_store.json; then \
@@ -265,6 +266,9 @@ set-waypoint:
 	@echo client_waypoint:
 	@cat ${DATA_PATH}/client_waypoint
 
+	@echo genesis_waypoint:
+	@cat ${DATA_PATH}/genesis_waypoint
+	
 client: set-waypoint
 # ifeq (${TEST}, y)
 # 	 echo ${MNEM} | cargo run -p cli -- -u http://localhost:8080 --waypoint $$(cat ${DATA_PATH}/client_waypoint) --chain-id ${CHAIN_ID}
